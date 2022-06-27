@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "type": "secrets.user"
+    },
+    "mssql1": {
+      "secretStore": "LocalSecretsFile",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/testboardgameapi-server/databases/testboardgameapi-database",
+      "type": "mssql.azure",
+      "connectionId": "AzureSQL",
+      "dynamicId": null
+    }
+  }
+}
