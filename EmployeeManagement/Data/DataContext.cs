@@ -11,5 +11,9 @@ namespace EmployeeManagement.Data
         }
 
         public DbSet<Employee> Employees { get; set; }
+
+        public DbSet<EmployeeManagement.Models.Role>? Role { get; set; }
+
+        public DbSet<EmployeeManagement.Models.Department>? Department { get; set; }
      }
 }
