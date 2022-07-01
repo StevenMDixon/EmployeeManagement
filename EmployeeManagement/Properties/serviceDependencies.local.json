@@ -4,10 +4,20 @@
       "type": "secrets.user"
     },
     "mssql1": {
-      "secretStore": "LocalSecretsFile",
+      "secretStore": "AzureKeyVault",
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/testboardgameapi-server/databases/EmployeeManagement_db",
       "type": "mssql.azure",
-      "connectionId": "AzureSQL",
+      "connectionId": "AzureSQL"
+    },
+    "identityapp1": {
+      "type": "identityapp.default",
+      "dynamicId": null
+    },
+    "secrets2": {
+      "secretStore": null,
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.KeyVault/vaults/EmployeeManagementkeys",
+      "type": "secrets.keyVault",
+      "connectionId": "VaultUri",
       "dynamicId": null
     }
   }

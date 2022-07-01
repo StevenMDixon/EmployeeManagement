@@ -1,4 +1,4 @@
-﻿{
+{
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
@@ -16,7 +16,10 @@
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7061;http://localhost:5061",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "Connection": "https://employeemanagementkeys.vault.azure.net/",
+        "AZURE_USERNAME": "helreizer55@hotmail.com",
+        "VaultUri": "https://employeemanagementkeys.vault.azure.net/"
       }
     },
     "IIS Express": {
@@ -24,7 +27,10 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "Connection": "https://employeemanagementkeys.vault.azure.net/",
+        "AZURE_USERNAME": "helreizer55@hotmail.com",
+        "VaultUri": "https://employeemanagementkeys.vault.azure.net/"
       }
     }
   }
