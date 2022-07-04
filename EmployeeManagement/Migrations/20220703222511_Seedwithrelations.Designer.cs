@@ -4,6 +4,7 @@ using EmployeeManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeManagement.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220703222511_Seedwithrelations")]
+    partial class Seedwithrelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,18 +33,12 @@ namespace EmployeeManagement.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Department");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Sales"
-                        });
                 });
 
             modelBuilder.Entity("EmployeeManagement.Models.Employee", b =>
@@ -62,6 +58,9 @@ namespace EmployeeManagement.Migrations
                     b.Property<int?>("RoleId")
                         .HasColumnType("int");
 
+                    b.Property<double?>("Salary")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ManagerId");
@@ -74,21 +73,14 @@ namespace EmployeeManagement.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Amanda Lima",
+                            Name = "Howard Lima",
                             RoleId = 2
                         },
                         new
                         {
                             Id = 2,
                             ManagerId = 1,
-                            Name = "Mark Lima",
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ManagerId = 1,
-                            Name = "Shawn Hawkins",
+                            Name = "Todd Man",
                             RoleId = 1
                         });
                 });
@@ -108,7 +100,6 @@ namespace EmployeeManagement.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -121,15 +112,13 @@ namespace EmployeeManagement.Migrations
                         new
                         {
                             Id = 1,
-                            DepartmentId = 1,
                             Salary = 20000.0,
                             Title = "Sales Associate"
                         },
                         new
                         {
                             Id = 2,
-                            DepartmentId = 1,
-                            Salary = 30000.0,
+                            Salary = 25000.0,
                             Title = "Sales Team Lead"
                         });
                 });

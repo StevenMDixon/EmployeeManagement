@@ -4,6 +4,7 @@ using EmployeeManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeManagement.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220704012443_fixingroles6")]
+    partial class fixingroles6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,13 +38,6 @@ namespace EmployeeManagement.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Department");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Sales"
-                        });
                 });
 
             modelBuilder.Entity("EmployeeManagement.Models.Employee", b =>
@@ -53,18 +48,16 @@ namespace EmployeeManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("ManagerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("RoleId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<double?>("Salary")
+                        .HasColumnType("float");
 
-                    b.HasIndex("ManagerId");
+                    b.HasKey("Id");
 
                     b.HasIndex("RoleId");
 
@@ -74,21 +67,13 @@ namespace EmployeeManagement.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Amanda Lima",
+                            Name = "Howard Lima",
                             RoleId = 2
                         },
                         new
                         {
                             Id = 2,
-                            ManagerId = 1,
-                            Name = "Mark Lima",
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ManagerId = 1,
-                            Name = "Shawn Hawkins",
+                            Name = "Todd Man",
                             RoleId = 1
                         });
                 });
@@ -101,19 +86,13 @@ namespace EmployeeManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("int");
-
                     b.Property<double?>("Salary")
                         .HasColumnType("float");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Role");
 
@@ -121,41 +100,29 @@ namespace EmployeeManagement.Migrations
                         new
                         {
                             Id = 1,
-                            DepartmentId = 1,
                             Salary = 20000.0,
                             Title = "Sales Associate"
                         },
                         new
                         {
                             Id = 2,
-                            DepartmentId = 1,
-                            Salary = 30000.0,
+                            Salary = 25000.0,
                             Title = "Sales Team Lead"
                         });
                 });
 
             modelBuilder.Entity("EmployeeManagement.Models.Employee", b =>
                 {
-                    b.HasOne("EmployeeManagement.Models.Employee", "Manager")
-                        .WithMany()
-                        .HasForeignKey("ManagerId");
-
                     b.HasOne("EmployeeManagement.Models.Role", "Role")
-                        .WithMany()
+                        .WithMany("Employees")
                         .HasForeignKey("RoleId");
-
-                    b.Navigation("Manager");
 
                     b.Navigation("Role");
                 });
 
             modelBuilder.Entity("EmployeeManagement.Models.Role", b =>
                 {
-                    b.HasOne("EmployeeManagement.Models.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId");
-
-                    b.Navigation("Department");
+                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }

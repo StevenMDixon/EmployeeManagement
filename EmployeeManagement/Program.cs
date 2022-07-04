@@ -10,12 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 var keyVaultUrl = "https://employeemanagementkeys.vault.azure.net/";
 
 var client = new SecretClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
-var secret = client.GetSecret("AzureSQL").Value.Value;
+var secret = client.GetSecret("AzureSQL").Value;
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    options.UseSqlServer(secret);
+    options.UseSqlServer(secret.Value);
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -1,12 +1,18 @@
-﻿namespace EmployeeManagement.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace EmployeeManagement.Models
 {
     public class Role
     {
         public int Id { get; set; }
-        public string? Title { get; set; }
+
+        [Required]
+        public string Title { get; set; } = "";
 
         public Double? Salary { get; set; }
 
         public Department? Department { get; set; }
+
+        public int? DepartmentId { get; set; }
     }
 }
