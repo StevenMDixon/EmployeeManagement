@@ -35,7 +35,7 @@ namespace EmployeeManagement.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Department");
+                    b.ToTable("Department", (string)null);
 
                     b.HasData(
                         new
@@ -68,7 +68,7 @@ namespace EmployeeManagement.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
 
                     b.HasData(
                         new
@@ -115,7 +115,7 @@ namespace EmployeeManagement.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Role");
+                    b.ToTable("Role", (string)null);
 
                     b.HasData(
                         new

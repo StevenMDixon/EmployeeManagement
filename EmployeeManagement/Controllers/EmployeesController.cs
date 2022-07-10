@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EmployeeManagement.Data;
 using EmployeeManagement.Models;
+using EmployeeManagement.Dtos;
+using AutoMapper;
 
 namespace EmployeeManagement.Controllers
 {
@@ -15,39 +17,47 @@ namespace EmployeeManagement.Controllers
     public class EmployeesController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public EmployeesController(DataContext context)
+        public EmployeesController(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Employees
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
+        public async Task<ActionResult<IEnumerable<EmployeeDto>>> GetEmployees()
         {
           if (_context.Employees == null)
           {
               return NotFound();
           }
-            return await _context.Employees.Include("Role").ToListAsync();
+
+          var employees = await _context.Employees.Include("Role").ToListAsync();
+          var employeeDtos = _mapper.Map<List<EmployeeDto>>(employees);
+         
+          return employeeDtos;
         }
 
         // GET: api/Employees/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Employee>> GetEmployee(int id)
+        public async Task<ActionResult<EmployeeDto>> GetEmployee(int id)
         {
           if (_context.Employees == null)
           {
               return NotFound();
           }
             var employee = await _context.Employees.Include("Role").FirstOrDefaultAsync(e => e.Id == id);
-
+            
             if (employee == null)
             {
                 return NotFound();
             }
 
-            return employee;
+            var employeeDto = _mapper.Map<EmployeeDto>(employee);
+
+            return employeeDto;
         }
 
         // PUT: api/Employees/5

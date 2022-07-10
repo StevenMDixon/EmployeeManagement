@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EmployeeManagement.Data;
 using EmployeeManagement.Models;
+using EmployeeManagement.Dtos;
+using AutoMapper;
 
 namespace EmployeeManagement.Controllers
 {
@@ -15,39 +17,48 @@ namespace EmployeeManagement.Controllers
     public class RolesController : ControllerBase
     {
         private readonly DataContext _context;
+        private IMapper _mapper;
 
-        public RolesController(DataContext context)
+        public RolesController(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Roles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Role>>> GetRole()
+        public async Task<ActionResult<IEnumerable<RoleDto>>> GetAllRoles()
         {
           if (_context.Role == null)
           {
               return NotFound();
           }
-            return await _context.Role.Include("Department").ToListAsync();
+
+            var roles = await _context.Role.Include("Employees").ToListAsync();
+            var roleDtos = _mapper.Map<List<RoleDto>>(roles);
+            
+            return roleDtos;
         }
 
         // GET: api/Roles/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Role>> GetRole(int id)
+        public async Task<ActionResult<RoleDto>> GetRoleById(int id)
         {
           if (_context.Role == null)
           {
               return NotFound();
           }
             var role = await _context.Role.FindAsync(id);
+            
 
             if (role == null)
             {
                 return NotFound();
             }
 
-            return role;
+            var roleDto = _mapper.Map<RoleDto>(role);
+
+            return roleDto;
         }
 
         // PUT: api/Roles/5

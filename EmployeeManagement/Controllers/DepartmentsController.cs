@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EmployeeManagement.Data;
 using EmployeeManagement.Models;
+using AutoMapper;
+using EmployeeManagement.Dtos;
 
 namespace EmployeeManagement.Controllers
 {
@@ -15,39 +17,47 @@ namespace EmployeeManagement.Controllers
     public class DepartmentsController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public DepartmentsController(DataContext context)
+        public DepartmentsController(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Departments
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Department>>> GetDepartment()
+        public async Task<ActionResult<IEnumerable<DepartmentDto>>> GetDepartment()
         {
           if (_context.Department == null)
           {
               return NotFound();
           }
-            return await _context.Department.ToListAsync();
+            var departments = await _context.Department.ToListAsync();
+            var departmentDtos = _mapper.Map<List<DepartmentDto>>(departments);
+
+            return departmentDtos;
         }
 
         // GET: api/Departments/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Department>> GetDepartment(int id)
+        public async Task<ActionResult<DepartmentDto>> GetDepartment(int id)
         {
           if (_context.Department == null)
           {
               return NotFound();
           }
             var department = await _context.Department.FindAsync(id);
+            
 
             if (department == null)
             {
                 return NotFound();
             }
 
-            return department;
+            var departmentDto = _mapper.Map<DepartmentDto>(department);
+
+            return departmentDto;
         }
 
         // PUT: api/Departments/5
