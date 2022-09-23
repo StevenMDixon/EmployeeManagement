@@ -9,6 +9,7 @@ using EmployeeManagement.Data;
 using EmployeeManagement.Models;
 using EmployeeManagement.Dtos;
 using AutoMapper;
+using EmployeeManagement.Query;
 
 namespace EmployeeManagement.Controllers
 {
@@ -27,14 +28,20 @@ namespace EmployeeManagement.Controllers
 
         // GET: api/Employees
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EmployeeDto>>> GetEmployees()
+        public async Task<ActionResult<IEnumerable<EmployeeDto>>> GetEmployees([FromQuery] EmployeeQuery employee)
         {
           if (_context.Employees == null)
           {
               return NotFound();
           }
 
-          var employees = await _context.Employees.Include("Role").ToListAsync();
+          var employees = await _context.Employees
+                .
+                //.Where(e => e.Id = employee.Id)
+                //.
+                .Include("Role")
+                .ToListAsync();
+            
           var employeeDtos = _mapper.Map<List<EmployeeDto>>(employees);
          
           return employeeDtos;

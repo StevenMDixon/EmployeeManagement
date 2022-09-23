@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq.Expressions;
 
 namespace EmployeeManagement.Models
 {
@@ -22,7 +23,6 @@ namespace EmployeeManagement.Models
         public Employee? Manager { get; set; }
 
         [ForeignKey("Manager")]
-        public int? ManagerId { get; set; } 
-
+        public int? ManagerId { get; set; }
     }
 }
