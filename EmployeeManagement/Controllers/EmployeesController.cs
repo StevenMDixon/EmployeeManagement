@@ -36,7 +36,6 @@ namespace EmployeeManagement.Controllers
           }
 
           var employees = await _context.Employees
-                .
                 //.Where(e => e.Id = employee.Id)
                 //.
                 .Include("Role")
